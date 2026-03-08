@@ -77,3 +77,16 @@ services:
       - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET}
     depends_on:
       - nats-server
+
+  auth-ms:
+    build: ./auth-ms
+    ports:
+      - '3004:3004'
+    volumes:
+      - ./auth-ms/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - PORT=3004
+      - NATS_SERVERS=nats://nats-server:4222
+    depends_on:
+      - nats-server
